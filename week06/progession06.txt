@@ -1,0 +1,32 @@
+Functional Programming 
+ - คือเอา function มาต่อเรียงกัน (compose) เพื่อเเก้ปัญหาที่ซับซ้อนขึ้น
+ - ต้อง avoids changing state and mutable data (ไม่เปลี่ยน original data)
+ - มันเป็น Declarative Programming คือบอกเเค่ what ว่าต้องการไร เเต่ไม่ต้องบอก How To
+ - มอง Function เป็น First-class citizens คือมองมันเท่ากับ data 
+
+First-Class and Higher-Order Functions คือ func ที่รับ func อื่นเป็น parameter "หรือ" return function
+มันมอง function เทียบเท่ากับ data 
+filter, map เป็น higher orderfunction เพราะรับ callback เข้าไปทำงาน
+
+Declarative Code อธิบายเเต่ what ไม่อธิบาย how
+
+Immutability มัน immutability คือไม่ควรแก้ไขค่า ไม่ควรมี side effect 
+
+Pure Functions เป็น func ที่การันตีว่าเมื่อใส่ input เดิมต้องได้ค่าเดียวกันทุกตัว
+
+Function Composition มัน can be composed to build more complex functions from simpler ones, allowing for code reuse and modularity
+
+Function Types มี 3 แบบ
+1. Anonymous function
+2. Named function
+3. Nested function
+
+Function Scope มี 3 ทฤษฎีคือ
+1. ตัวแปรที่ประกาศใน local จะไม่สามารถถูกเข้าถึงได้จากนอก function
+2. a function can access all variables and functions defined inside the scope in which it is defined
+3. function ที่เป็น global scope จะสามารถ access ทุก global variables 
+   และ function defined inside another function can also access all variables defined in its parent function 
+
+Closures มันก็คือ Nested Function ที่สามารถรักษาค่าตัวแปรไว้ได้ (รักษาสภาพเเวดล้อมใน function) 
+แปลว่ามันต้องมี outer function ของมันด้วย
+****** outer function ไม่มีสิทธิ์เข้าถึงตัวแปรข้างใน (เเต่ละ function เห็นเเค่ตัวนอกตัวเอง เเต่จะไม่เห็นตัวในตัวเอง)
