@@ -31,6 +31,7 @@ function outer(){
 }
 outer()
 console.log(x)
+console.log("====================")
 
 /*Write a function createCounter(start) that:
 Starts counting from the given start value.
@@ -68,6 +69,7 @@ console.log(counter.increment())
 console.log(counter.increment()) 
 console.log(counter.decrement()) 
 console.log(counter.getValue()) 
+console.log("====================")
 
 /*Write a function secretMessage(password) that:
 1. Accepts a string password.
@@ -90,3 +92,96 @@ function secretMessage(password) {
 const check = secretMessage("opensesame")
 console.log(check("wrongpass"))  
 console.log(check("opensesame")) 
+console.log("====================")
+
+/*Write a function loginSystem(correctPassword, maxAttempts) that:
+1. Accepts a string correctPassword and a number maxAttempts.
+2. Returns a function that accepts a string tryPassword.
+3. If tryPassword matches correctPassword, return "Access granted".
+4. If it doesn’t match, decrease the number of attempts left and return "Access denied. X attempts left".
+5. If the number of failed attempts reaches maxAttempts, return "Account locked" and ignore further tries.
+Example Usage
+const login = loginSystem("secret123", 3)
+console.log(login("wrong"))     // Access denied. 2 attempts left
+console.log(login("nope"))      // Access denied. 1 attempts left
+console.log(login("guess"))     // Account locked
+console.log(login("secret123")) // Account locked*/
+function loginSystem(correctPassword, maxAttempts) {
+  let attemptsLeft = maxAttempts
+  let locked = false
+
+  return function(tryPassword) {
+    if (locked) {
+      return "Account locked"
+    }
+
+    if (tryPassword === correctPassword) {
+      return "Access granted"
+    } else {
+      attemptsLeft--
+      if (attemptsLeft <= 0) {
+        locked = true
+        return "Account locked"
+      }
+      return `Access denied. ${attemptsLeft} attempts left`
+    }
+  }
+}
+const login = loginSystem("secret123", 3)
+console.log(login("wrong"))     // Access denied. 2 attempts left
+console.log(login("nope"))      // Access denied. 1 attempts left
+console.log(login("guess"))     // Account locked
+console.log(login("secret123")) // Account locked
+console.log("====================")
+
+/*Write a function bankAccount(initialBalance) that:
+1. Accepts a starting balance initialBalance.
+2. Returns an object with these methods:
+  deposit(amount) → เพิ่มเงินในบัญชี
+  withdraw(amount) → ถอนเงิน ถ้าเงินไม่พอให้ return "Insufficient funds"
+  getBalance() → แสดงยอดเงินปัจจุบัน
+  getHistory() → แสดงรายการธุรกรรมทั้งหมดในรูปแบบ array (เช่น ["Deposit 100", "Withdraw 50"])
+Balance และ history ต้องถูกเก็บไว้ใน closure และไม่สามารถแก้ไขได้โดยตรงจากภายนอก 
+Example Usage
+const account = bankAccount(200)
+
+console.log(account.deposit(100))   // Deposited 100. Balance: 300
+console.log(account.withdraw(50))   // Withdrew 50. Balance: 250
+console.log(account.withdraw(500))  // Insufficient funds
+console.log(account.getBalance())   // 250
+console.log(account.getHistory())   // ["Deposit 100", "Withdraw 50", "Failed withdraw 500"] */
+function bankAccount(initialBalance) {
+  let balance = initialBalance
+  let history = []
+
+  return {
+    deposit: function(amount) {
+      balance += amount
+      history.push(`Deposit ${amount}`)
+      return `Deposited ${amount}. Balance: ${balance}`
+    },
+    withdraw: function(amount) {
+      if (amount > balance) {
+        history.push(`Failed withdraw ${amount}`)
+        return "Insufficient funds"
+      }
+      balance -= amount
+      history.push(`Withdraw ${amount}`)
+      return `Withdrew ${amount}. Balance: ${balance}`
+    },
+    getBalance: function() {
+      return balance
+    },
+    getHistory: function() {
+      return history
+    }
+  }
+}
+
+const account = bankAccount(200)
+console.log(account.deposit(100))   // Deposited 100. Balance: 300
+console.log(account.withdraw(50))   // Withdrew 50. Balance: 250
+console.log(account.withdraw(500))  // Insufficient funds
+console.log(account.getBalance())   // 250
+console.log(account.getHistory())   // ["Deposit 100", "Withdraw 50", "Failed withdraw 500"]
+console.log("====================")
