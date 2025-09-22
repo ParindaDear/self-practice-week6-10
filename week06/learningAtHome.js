@@ -185,3 +185,62 @@ console.log(account.withdraw(500))  // Insufficient funds
 console.log(account.getBalance())   // 250
 console.log(account.getHistory())   // ["Deposit 100", "Withdraw 50", "Failed withdraw 500"]
 console.log("====================")
+
+/*Problem: Unique ID Generator
+Write a function idGenerator() that:
+1. Starts from 1.
+2. Returns a function that, when called, generates the next unique ID.
+3. Each ID should increase by 1 automatically. 
+Example Usage
+const generateId = idGenerator()
+console.log(generateId()) // 1
+console.log(generateId()) // 2
+console.log(generateId()) // 3 */
+function idGenerator() {
+  let id = 0
+  return function(){
+    id ++
+    return id
+  }
+}
+const generateId = idGenerator()
+console.log(generateId()) // 1
+console.log(generateId()) // 2
+console.log(generateId()) // 3
+console.log("====================")
+
+/*Problem: To-Do List Manager
+Write a function createTodoList() that:
+1. Keeps a private list of tasks (initially empty).
+2. Returns an object with these methods:
+  add(task) → adds a task to the list
+  remove(task) → removes a task from the list
+  getAll() → returns all tasks in the list as an array
+Example Usage 
+const todos = createTodoList()
+todos.add("Buy milk")
+todos.add("Read a book")
+console.log(todos.getAll())   // ["Buy milk", "Read a book"]
+todos.remove("Buy milk")
+console.log(todos.getAll())   // ["Read a book"] */
+function createTodoList() {
+  let tasks = []
+
+  return {
+    add: function(task) {
+      tasks.push(task)
+    },
+    remove: function(task){
+      tasks = tasks.filter(t => t !== task)
+    },
+    getAll: function() {
+      return tasks
+    }
+  }
+}
+const todos = createTodoList()
+todos.add("Buy milk")
+todos.add("Read a book")
+console.log(todos.getAll())   // ["Buy milk", "Read a book"]
+todos.remove("Buy milk")
+console.log(todos.getAll())   // ["Read a book"] 
