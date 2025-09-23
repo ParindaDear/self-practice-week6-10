@@ -48,3 +48,38 @@ console.log(myTasks.getAll())
 
 console.log(myTasks.filterByStatus(true))
 // [{ task: "Read a book", done: true }] */
+function createTaskManager() {
+  let tasks = []
+
+  return {
+    add: function(task) {
+      tasks.push({ task: task, done: false })
+    },
+    markDone: function(task) {
+      tasks = tasks.map(t =>
+        t.task === task ? { ...t, done: true } : t
+      )
+    },
+    remove: function(task) {
+      tasks = tasks.filter(t => t.task !== task)
+    },
+    getAll: function() {
+      return tasks
+    },
+    filterByStatus: function(status) {
+      return tasks.filter(t => t.done === status)
+    }
+  }
+}
+
+const myTasks = createTaskManager()
+
+myTasks.add("Finish homework")
+myTasks.add("Read a book")
+myTasks.add("Buy milk")
+console.log(myTasks.getAll())
+
+myTasks.markDone("Read a book")
+console.log(myTasks.getAll())
+
+console.log(myTasks.filterByStatus(true))
