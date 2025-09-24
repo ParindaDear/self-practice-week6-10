@@ -1,0 +1,19 @@
+ประเภทของ node มี 6 แบบ
+1. root node / document node (logical node คือไม่มีอยู่จริง เกิดมาเพื่อคุมทุก node ในเอกสาร) เป็นตัวแรกของเอกสาร html ต้องมีตัวเดียวเท่านั้น
+2. root element / document element   ซึ่งมันต้องเป็น html เท่านั้น
+3. document_type node
+4. attribute node จะไม่วาดมันเป็น node 
+5. text node 
+6. comment node 
+
+เราต้อง traverse ความมสัมพันธ์ของ node ให้ได้
+parent , child , sibling , descendant , ancestor
+
+getElementById
+เป็นวิธีการ query ผ่าน id โดยมันจะไปหา node ที่มีค่า id ตรงกับที่เราระบุ โดยคำตอบจะมีเเค่ 2 แบบคือ เจอ กับ null
+
+append คือการเอา object นั้นไปอยู่ท้าย node 
+
+Attribute node 
+มันไม่ใช่ node ใน DOM เราไม่สามารถ traverse มันได้
+เราสาามารถดูได้เเค่ element ที่เป็นเจ้าของมัน ที่เหลือจะดูไม่ได้
