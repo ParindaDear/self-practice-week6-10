@@ -4,13 +4,14 @@
 // console.log(typeof document) //จะออกมาเป็น object โดยมันจะเก็บ reference
 
 // console.log(document.getElementById('123')) //เป็นวิธีการ query ผ่าน id โดยมันจะไปหา node ที่มีค่า id ตรงกับที่เราระบุ 
+
 // const htmlElement = document.documentElement   //(ต่อ) โดยคำตอบจะมีเเค่ 2 แบบคือ เจอ กับ null
 // console.log(htmlElement)
 
 // console.log(htmlElement.parentElement) //null
 // console.log(htmlElement.parentNode) // root node 
 // if(htmlElement.parentNode === document) {
-//     console.log("parent of html is a rooot node") // คำตอบคือ มันจะเป็นจริง 
+//     console.log("parent of html is a root node") // คำตอบคือ มันจะเป็นจริง 
 // }
 
 // console.log(document.firstChild) //firstChild คือลูกคนเเรกของ root node ในตัวอย่างนี้คือ DOCTYPE
@@ -27,9 +28,9 @@
 // const divChildNodes = divElement.childNodes //get all node types children (NodeList, can use forEach)
 // console.log(divChildNodes.length) //3 
 // divChildNodes.forEach((child) => console.log(child))
-// // 2. get only Element node type children (return (dynamic) HTMLCollention, can not use forEach)
+// // 3. get only Element node type children (return (dynamic) HTMLCollention, can not use forEach)
 // const divChildren = divElement.children
-// console.log(divChildNodes.length) //2 
+// console.log(divChildren.length) //2 
 // // for (let i = 0; i < divChildren.length; i++){
 // //     console.log(divChildren[i])
 // // }
@@ -91,36 +92,33 @@
 // const body = document.body
 // body.appendChild(pElement) //<body>...<p id="p5">#5</p></body>
 
-let el = document.getElementById("demo")
-console.log(el.innerHTML)
-console.log(el.innerText)
-console.log(el.textContent)
+// let el = document.getElementById("demo")
+// console.log(el.innerHTML)
+// console.log(el.innerText)
+// console.log(el.textContent)
 
-//โจทย์
-let div = document.getElementById("demo");
-console.log(div.innerHTML);
-console.log(div.innerText);
-console.log(div.textContent);
-const pElement = document.createElement('p')
 //1. append <p> under <div id="demo">
-let p = document.createElement("p");
-div.appendChild(p);
+const demoDiv = document.getElementById('demo')
 
 //1.5 add format='italic' attribute to <p>
-p.setAttribute("format", "italic");
+const pElement = document.createElement('p')
+pElement.setAttribute("format", "italic")
 
 //2. try to add three different text types
 //2.1 add <i>Sample Italic Text</i> with innerHTML
-let p1 = document.createElement("p");
-p1.innerHTML = "<i>Sample Italic Text</i>";
-div.appendChild(p1);
+let p1 = document.createElement('p')
+p1.setAttribute("format", "italic")
+p1.innerHTML = "<i>Sample Italic Text</i>"
+demoDiv.appendChild(p1)
 
-//2.2 add <i>Sample Italic Text</i> with innerText
-let p2 = document.createElement("p");
-p2.innerText = "<i>Sample Italic Text</i>";
-div.appendChild(p2);
+//2.2  add <i>Sample Italic Text</i> with innerText
+let p2 = document.createElement('p')
+p2.setAttribute("format", "italic")
+p2.innerText = "<i>Sample Italic Text</i>"
+demoDiv.appendChild(p2);
 
 //2.3 add <i>Sample Italic Text</i> with textContent
-let p3 = document.createElement("p");
-p3.textContent = "<i>Sample Italic Text</i>";
-div.appendChild(p3);
+let p3 = document.createElement('p')
+p3.setAttribute("format", "italic")
+p3.textContent = "<i>Sample Italic Text</i>"
+demoDiv.appendChild(p3);
