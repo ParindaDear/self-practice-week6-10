@@ -1,20 +1,23 @@
-//โจทย์มีเเค่ว่าต้องการสร้าง <p id='p5'>#5</p> แทรกตรงตามตำแหน่งที่บอกใน html
-const pElement = document.createElement('p') //สร้าง <p></p>
-pElement.setAttribute("id", "p5") //ใส่ attribute id='p5' ใน tag p
-pElement.textContent = "#5" //ใส่ text content ให้ p
+//1. จงสร้าง <p id="p5">#5</p> แล้วแทรกไว้ ท้าย <body>
+const p5 = document.createElement('p')
+p5.setAttribute('id', 'p5')
+p5.textContent = '#5'
+const body = document.body
+body.appendChild(p5)
 
-const body = document.body // เตรียมที่ที่จะยัดใส่
-body.appendChild(pElement) // ยัดมันใส่ไปใน body
+//2. จงสร้าง <p id="p6">#6</p> แล้วแทรกไว้ ก่อน <script> tag ใน <body>
+const p6 = document.createElement('p')
+p6.setAttribute('id', 'p6')
+p6.textContent = '#6'
+const scriptTag = document.querySelector('script')
+document.body.insertBefore(p6, scriptTag)
+
+/* 3.สมมติว่ามี <p id="source">Hello</p>
+จง clone element นี้ แล้วตั้ง id ใหม่เป็น "clone" และแทรกไว้ ท้าย <body> */
 
 
-// //โจทย์เดิมเเต่เขียนทุกอย่างเต็มยศ 
-// const pElement = document.createElement('p')
-// const idAttr = document.createAttribute('id')
-// idAttr.value = 'p5'
-// pElement.setAttributeNode(idAttr)
+/* 4. สมมติว่ามี <div id="old">Old Div</div>
+จงสร้าง <p id="new">New Paragraph</p> แล้ว แทนที่ <div id="old"> ด้วย <p> ที่สร้างใหม่ */
 
-// const pText = document.createTextNode('#5')
-// pElement.appendChild(pText)
 
-// const body = document.body
-// body.appendChild(pElement)
+/* 5. จงสร้าง comment node "This is a comment" แล้วแทรกไว้ ท้าย <body> */
