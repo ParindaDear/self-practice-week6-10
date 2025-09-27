@@ -14,10 +14,19 @@ document.body.insertBefore(p6, scriptTag)
 
 /* 3.สมมติว่ามี <p id="source">Hello</p>
 จง clone element นี้ แล้วตั้ง id ใหม่เป็น "clone" และแทรกไว้ ท้าย <body> */
-
+const source = document.getElementById('source')
+const clone = source.cloneNode(true);
+clone.id = 'clone';
+document.body.appendChild(clone);
 
 /* 4. สมมติว่ามี <div id="old">Old Div</div>
 จงสร้าง <p id="new">New Paragraph</p> แล้ว แทนที่ <div id="old"> ด้วย <p> ที่สร้างใหม่ */
-
+const oldDiv = document.getElementById('old');
+const newP = document.createElement('p')
+newP.id = 'new';
+newP.textContent = 'New Paragraph';
+oldDiv.parentNode.removeChild(newP, oldDiv);
 
 /* 5. จงสร้าง comment node "This is a comment" แล้วแทรกไว้ ท้าย <body> */
+const comment = document.createComment('This is a comment');
+document.body.appendChild(comment);
