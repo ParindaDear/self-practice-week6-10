@@ -12,8 +12,28 @@ parent , child , sibling , descendant , ancestor
 getElementById
 เป็นวิธีการ query ผ่าน id โดยมันจะไปหา node ที่มีค่า id ตรงกับที่เราระบุ โดยคำตอบจะมีเเค่ 2 แบบคือ เจอ กับ null
 
+createElement(tag) สร้าง element
+createTextNode(text) สร้าง text node
+
 append คือการเอา object นั้นไปอยู่ท้าย node 
+appendChild(node) เอา node ไปท้าย
+
+childNodes กับ children ต่างกันไง
+1. childNodes
+    -คืนค่าเป็น NodeList (static)
+    -มันเก็บลูกทุกชนิดของ node ทั้งElement, Text, Comment 
+    -เช่น ช่องว่าง (whitespace) ระหว่างแท็ก ก็จะถูกนับเป็น #text node ด้วย
+    -ใช้ .forEach() ได้ตรง ๆ
+2. children
+    -คืนค่าเป็น HTMLCollection (dynamic)
+    -เก็บเฉพาะ Element Node เท่านั้น (ไม่เอา text node, comment node)
+    -HTMLCollection ไม่ใช่ array เลย ใช้ forEach ตรง ๆ ไม่ได้ ต้อง Array.from() ก่อน
 
 Attribute node 
 มันไม่ใช่ node ใน DOM เราไม่สามารถ traverse มันได้
 เราสาามารถดูได้เเค่ element ที่เป็นเจ้าของมัน ที่เหลือจะดูไม่ได้
+
+Attribute กับ Property ต่างกันไง
+Attribute = สิ่งที่อยู่ใน HTML (<input type="text">)
+Property = สิ่งที่เป็นค่าของ object ใน DOM (input.value, input.checked)
+ใช้ getAttribute() / setAttribute() เพื่ออ่าน-เขียน attribute
