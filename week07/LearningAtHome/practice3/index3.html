@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Complex DOM Node Exercise</title>
+</head>
+<body>
+  <!-- header section -->
+  <header id="main-header" class="site-header" data-role="header">
+    <h1 style="color: darkred;" data-level="1">Welcome</h1>
+    <nav>
+      <ul id="menu" class="nav-list">
+        <li class="nav-item" data-info="home">Home</li>
+        <li class="nav-item" data-info="about">About</li>
+        <li class="nav-item" data-info="contact">Contact</li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="content" class="container" style="padding: 10px;" data-section="main">
+    <article id="post-1" class="post">
+      <h2>Post Title 1</h2>
+      <p>This is <span style="font-weight: bold;">important</span> text.</p>
+    </article>
+
+    <!-- another article -->
+    <article id="post-2" class="post featured" data-author="admin">
+      <h2>Post Title 2</h2>
+      <p>Second article paragraph.</p>
+    </article>
+  </main>
+
+  <footer id="main-footer" class="site-footer">
+    <p>&copy; 2025 Example Site</p>
+  </footer>
+
+  <script src="main3.js"></script>
+</body>
+</html>
