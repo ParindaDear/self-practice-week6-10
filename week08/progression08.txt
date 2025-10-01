@@ -1,0 +1,145 @@
+getElementById('id') คือเราต้องระบุ id
+🌈NodeList(staic ไม่เปลี่ยนตาม DOM)
+querySelector('#cssSelector') ต้องเขียน # หรือ .
+    คืนค่า element เดียว(ตัวแรก)
+querySelectorAll('#cssSelector') ต้องเขียน # หรือ .
+    คืนค่าเป็น NodeList (หลายตัว)(collection)
+    เป็นแบบ static , array-like (ใช้ forEach ได้ เเต่ถ้าจะแปลงเป็น array ต้องใช้ Array.from)
+    ผลที่ได้เราจะไม่สามารถเอาตัวแปรไปใช้ได้เลย เราต้องลงไปอ้างถึง index มัน เช่น console.log(soupSelectorAllElement[0])
+getElementsByName('name') เลือก element ตามค่า name attribute
+🌈HTMLCollection (live เปลี่ยนตาม DOM)
+getElementsByTagName('tag') เลือก element ตามชื่อ tag เช่น div, p, like
+getElementsByClassName('class') เลือก element ตาม class
+    มันก็เหมือนใช้ querySelector โดยไม่ต้องใส่ .
+
+
+
+HTML Ver1
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Manipulating Elements</title>
+  </head>
+  <body>
+    <h3>SIT@KMUTT Restaurant</h3>
+    <div class="menu">
+      <ul id="appetizer">
+        <li class="vegan">Vegetable Rolls</li>
+        <!-- out of stock -->
+        <li class="meat">Chicken Wings</li>
+        <li class="meat">Tuna Sandwich</li>
+      </ul>
+      <ul id="soup">
+        <li class="meat">Spicy Bacon-Corn Soup</li>
+        <li class="vegan">Vegetable Soup</li>
+        <li class="meat">Beef Soup</li>
+        <li class="vegan">Coconut Soup</li>
+      </ul>
+    </div>
+    <p>***Enjoy Your Meal, Thank you***</p>
+    <script src="main.js"></script>
+  </body>
+</html>
+ 
+
+
+ //1.display all child nodes under  <ul id="appetizer">
+const appetizerElement = document.getElementById('appetizer')
+//หรือเขียนแบบนี้ก็ได้ const appetizerElement = document.querySelector('#appetizer')
+console.log(appetizerElement.childNodes)
+
+//2.อยากได้ meat เเรกในเอกสาร
+const meatElement= document.querySelector('.meat')
+console.log(meatElement) //<li class="meat">Chicken Wings</li>
+
+//3. อยากได้ ทุก meat ในเอกสาร
+const meatAllElement= document.querySelectorAll('.meat')
+//3.1 เนื่องด้วยผลออกมาเป็น NodeList จง loop element ทุกตัวของ meat
+// meatAllElement.forEach((ele) => console.log(ele)) //จะได้ทุก meat 
+
+//4. find meat element that contain a text value "soup" 
+meatAllElement.forEach((ele) => {
+    if(ele.textContent.toLowerCase().includes('soup')){ //จะใช้ textContent หรือ innerHTML ก็ได้
+        console.log(ele)
+    }
+})
+
+//4.1 ถ้าให้เก็บลงตัวแปร เพื่อเอาไปทำงานต่อ
+const result = []
+meatAllElement.forEach((ele) => {
+    if(ele.textContent.toLowerCase().includes('soup')) {
+        result.push(ele)
+    }
+})
+console.log(result)
+
+//5. go to the first child element node under <ul id="soup"> and display all sibling nodes(ไปทางขวา)
+/* Expected output
+        <li class="meat">Spicy Bacon-Corn Soup</li>
+        <li class="vegan">Vegetable Soup</li>
+        <li class="meat">Beef Soup</li>
+        <li class="vegan">Coconut Soup</li> */
+const ulELement = document.querySelector('#soup')
+let curNode = ulELement.firstElementChild
+//หรือเขียนแบบนี้ก็ได้ let curNode = ulElement.children[0]
+while(curNode !== null) {
+    console.log(curNode)
+    curNode = curNode.nextElementSibling
+}
+
+
+
+HTML v2
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Manipulating Elements</title>
+  </head>
+  <body>
+    <h3>SIT@KMUTT Restaurant</h3>
+    <div class="menu">
+      <ul id="appetizer">
+        <li class="vegan">Vegetable Rolls</li>
+        <!-- out of stock -->
+        <li class="meat">Chicken Wings</li>
+        <li class="meat">Tuna Sandwich</li>
+      </ul>
+      <ul id="soup">
+        <li class="meat">Spicy Bacon-Corn Soup</li>
+        <li class="vegan">Vegetable Soup</li>
+        <li class="meat">Beef Soup</li>
+        <li class="vegan">Coconut Soup</li>
+      </ul>
+      <form action="/action_page.php" method="get" name="myForm">
+        First name: <input type="text" name="fname" /><br />
+        Last name: <input type="text" name="lname" /><br />
+        Full name: <input type="text" name="fname" /><br />
+        <input type="button" onclick="formSubmit()" value="Send form data!" />
+      </form>
+    </div>
+    <p>***Enjoy Your Meal, Thank you***</p>
+    <script src="main.js"></script>
+  </body>
+</html>
+ 
+
+ //1.getElementsByName(), return NodeList data type
+const fnameElement = document.getElementsByName("fname")
+console.log(fnameElement.length)
+fnameElement.forEach((ele) => console.log(ele))
+
+//2. getElementsByTagName(), return HTMLCollection (array-like) data type
+const inputElements = document.getElementsByTagName('input')
+Array.from(inputElements).forEach((ele) => console.log(ele))
+
+//3. getElementByClassName(), return HTMLCollection (array-like) data type
+const veganElements = document.getElementsByClassName('vegan')
+Array.from(veganElements).forEach((ele) => console.log(ele))
+
+//4. find the first element of document that has an ID value "appetizer" or "soup"
+const firstElement = document.querySelector("#appetizer, #soup");
+console.log(firstElement);
+
+//5. fiind all class meat elements under <ul id="appetizer"> or <ul id="soup">
+const meatElemet = document.querySelectorAll("#appetizer .meat, #soup .meat"); //เว้นวรรคคือ ancestor descendant
+meatElemet.forEach((ele) => console.log(ele));
