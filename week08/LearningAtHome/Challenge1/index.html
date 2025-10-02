@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Box Style Example</title>
+    <style>
+      #box {
+        width: 200px;
+        height: 200px;
+        background: lightgray;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0;
+        font-weight: bold;
+        transition: all 0.3s;
+      }
+
+      .rounded {
+        border-radius: 20px;
+      }
+
+      .shadow {
+        box-shadow: 5px 5px 10px gray;
+      }
+
+      .highlight {
+        color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box">BOX</div>
+
+    <button id="roundedBtn">ทำให้มุมโค้ง</button>
+    <button id="shadowBtn">เพิ่มเงา</button>
+    <button id="highlightBtn">ทำให้เด่น</button>
+
+    <script src="main.js"></script>
+  </body>
+</html>
