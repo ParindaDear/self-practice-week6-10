@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Theme Switcher</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        text-align: center;
+        transition: background 0.3s, color 0.3s;
+      }
+
+      .dark {
+        background: #222;
+        color: white;
+      }
+
+      .light {
+        background: white;
+        color: black;
+      }
+
+      button {
+        margin: 10px;
+        padding: 8px 16px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body class="light">
+    <h1>Theme Switcher</h1>
+    <button id="lightBtn">Light Mode</button>
+    <button id="darkBtn">Dark Mode</button>
+
+    <script src="main4.js"></script>
+  </body>
+</html>
