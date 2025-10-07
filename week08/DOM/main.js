@@ -67,20 +67,6 @@
 
 
 
-
-
-
-
-
-// insertBefore(newNode, referenceNode) //The node to insert becomes the previous sibling of the reference node
-// replaceChild(newChild, oldChild)//replaces a child node within the given (parent) node
-// removeChild(child)//removes a child node from the DOM and returns the removed node.
-
-
-
-
-
-
 /* <ul id="soup">
 <li class="meat">Spicy Bacon-Corn Soup</li>
 <!-- 2. remove Vegetable Soup -->
