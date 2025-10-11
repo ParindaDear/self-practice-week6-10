@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>JavaScript Events Practice</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 40px;
+      background-color: #f7f7f7;
+    }
+    section {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    h2 {
+      margin-top: 0;
+      color: #333;
+    }
+    #colorBox {
+      width: 100px;
+      height: 100px;
+      background-color: lightblue;
+      margin-top: 10px;
+    }
+    #taskList li {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎯 JavaScript Events Practice</h1>
+
+  <!-- ✅ Task 1: Click Event -->
+  <section id="task1">
+    <h2>Task 1 – Click Event</h2>
+    <button id="clickBtn">Click Me</button>
+    <p id="clickResult"></p>
+  </section>
+
+  <!-- ✅ Task 2: Mouse Events -->
+  <section id="task2">
+    <h2>Task 2 – Mouse Events</h2>
+    <div id="colorBox"></div>
+  </section>
+
+  <!-- ✅ Task 3: Input Event -->
+  <section id="task3">
+    <h2>Task 3 – Input Event</h2>
+    <input type="text" id="liveInput" placeholder="Type something..." />
+    <p id="liveDisplay"></p>
+  </section>
+
+  <!-- ✅ Task 4: Form Submit -->
+  <section id="task4">
+    <h2>Task 4 – Form Submit</h2>
+    <form id="demoForm">
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Submit</button>
+    </form>
+    <p id="formMsg"></p>
+  </section>
+
+  <!-- ✅ Task 5: Event Delegation -->
+  <section id="task5">
+    <h2>Task 5 – Event Delegation</h2>
+    <ul id="taskList">
+      <li>Buy groceries</li>
+      <li>Clean the room</li>
+      <li>Learn JavaScript</li>
+    </ul>
+    <p><small>Click a task to remove it.</small></p>
+  </section>
+
+  <script src="main.js"></script>
+</body>
+</html>

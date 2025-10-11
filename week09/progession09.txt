@@ -1,0 +1,463 @@
+observer pattern คือ 1 object มีคนติดตามเยอะๆ(subscriber)
+โดยการเขียนจะเเบ่งเป็น 2 ส่วนคือ  Publisher กับ Subscriber
+
+Event Propagation มี 3 Phase ในการ flow
+1. Capturing Phase ไหลจาก root ลงมาที่ obj (node ที่เกิดเหตุ) (true)
+2. Target Phase จุดเกิดเหตุ
+3. Bubbling Phase ไหลจากจุดเกิดเหตุขึ้นไป root (default) (false)
+จะใช้อะไรขึ้นอยู่กับโจทย์
+
+เราควร add event ผ่าน addEventListener() กับ removeEventListener()
+ซึ่งจะมี 3 parameter ที่ต้องใส่คือ (eventType, handleFunction, eventFlow)
+
+ถ้าจะ remove ตรง handleFunction ห้ามเขียนแบบ anonymous func
+
+nodeType ค่าของมันมีดังนี้
+    1=ELEMENT_NODE
+    3=TEXT_NODE 
+
+(เรื่องเก่าต่อให้จบ) system dialog
+alert() เป็นการให้ information มีให้กดปุ่มเเค่ ok
+confirm() เป็นการให้เลือก ok กับ cancel 
+prompt() ให้ใส่ input
+
+
+VER1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="main.js"></script>
+</body>
+</html>
+
+
+//ใช้ system dialog ที่เป็น prompt
+const yourName = prompt('What is your name', 'typing ypur name...')
+console.log(yourName)
+
+let nameConfirm = null
+if(yourName?.trim().length!==0 && yourName?.trim()!==null){  // เรื่องพิเศษเกล็ดความรู้ ? เป็นการใช้ optional chaining ถ้าเป็น null มันจะไม่ throw error เช่น yourName?
+    nameConfirm = confirm(`Are you ${yourName} ?`)
+}
+nameConfirm? alert(`Hello, ${yourName}`) : alert(`Hello, Guest`)
+
+
+VER2
+//body คือพื้นที่เขียว   div คือเหลือง   แล้วปุ่ม submit เป็นลูกของ div
+//จง query ปุ่ม submit มา
+const submitButton = document.querySelector('div > button') //div > button เพื่อให้เเม่นยำขึ้น
+
+/*1. add event with anonymous handle function (ฝังเหตุการณ์ click ในปุ่ม submit โดยเขียนแบบ anonymous)
+โดยเมื่อปุ่มถูกคลิก ให้แสดงข้อความ Submit button was clicked! ใน console*/
+submitButton.addEventListener('click', ()=> {
+    console.log("Submit button was clicked!")
+})
+
+/*2. add event with name function (ฝังเหตุการณ์ click ในปุ่ม submit โดยเขียนแบบ name function)
+โดยเมื่อปุ่มถูกคลิก ให้แสดงข้อความ Submit button was clicked eiei ใน console*/
+const handlerButton = () => { //เป็นการสร้าง func handlerButton ก่อน เพราะถ้าสิ่งที่ส่งไปเป็น arguement ต้องเป็น function
+    console.log("Submit button was clicked eiei")
+} 
+submitButton.addEventListener("click", handlerButton)
+
+///2.1 ลอง remove สิ้ (จารย์แนะนำว่าถ้าจะเขียน remove ด้วยให้เขียนแบบ named function)
+submitButton.removeEventListener("click",handlerButton)  //จะทำให้ตอนคลิกปุ่มจะไม่มีไรเกิดขึ้นละ เพราะเราถอนมันละ
+
+
+// โค้ดตั้งตั้นจาก ver ที่เเล้ว
+const submitButton = document.querySelector('div > button') //div > button เพื่อให้เเม่นยำขึ้น
+
+submitButton.addEventListener('click', ()=> {
+    console.log("Submit button was clicked!")
+})
+
+const divElement = document.querySelector('div')
+divElement.addEventListener("click", () => {
+    console.log("Div was clicked!")
+})
+
+// const bodyElement = document.body
+// bodyElement.addEventListener("click", ()=> {
+//     console.log("Body was clicked!")
+// })
+/*ผลจะได้ว่าคลิกปุ่ม submit ปุ่มเดียวสะเทือนทั้งหมด มันเป็น bubble ล่างขึ้นบน */
+
+//จงเปลี่ยนเป็น capturing flow
+const bodyElement = document.body
+bodyElement.addEventListener("click", ()=> {
+    console.log("Body was clicked!")
+}, true)
+
+
+ 
+VER3 เอา button ออกจาก div
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: green;">
+    <div style="background-color: yellow; height: 200px;">
+    </div>
+    <button>Submit</button>
+    <script src="main.js"></script>
+</body>
+</html>
+
+
+
+VER4 เอา button กลับเข้า div เหมือนเดิม
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: green;">
+    <div style="background-color: yellow; height: 200px;">
+        <button>Submit</button>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
+
+
+const submitButton = document.querySelector('button') //div > button เพื่อให้เเม่นยำขึ้น
+
+submitButton.addEventListener('click', (event)=> {
+    console.log(event.target)
+    console.log(event.currentTarget)
+    console.log(event.eventPhase)
+    console.log("Submit button was clicked!")
+},true)
+
+const divElement = document.querySelector('div')
+divElement.addEventListener("click", (event) => {
+    console.log(event.target)
+    console.log(event.currentTarget)
+    console.log(event.eventPhase)
+    console.log("Div was clicked!")
+},true)
+
+const bodyElement = document.body
+bodyElement.addEventListener("click", (event)=> {
+    console.log(event.target)
+    console.log(event.currentTarget)
+    console.log(event.eventPhase)
+    console.log("Body was clicked!")
+})
+
+
+
+
+VER5
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: green;">
+    <div style="background-color: yellow; height: 200px;">
+        <button id="submit">Submit</button>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
+const submitButton = document.querySelector('button') //div > button เพื่อให้เเม่นยำขึ้น
+
+submitButton.addEventListener('click', (event)=> {
+    console.log(event.target.id)
+    console.log(event.target.nodeName)
+    console.log(event.target.nodeType)
+    console.log(event.target.nodeValue)
+    console.log(event.target.parentElement)
+    console.log(event.currentTarget)
+    console.log(event.eventPhase)
+    console.log("Submit button was clicked!")
+},true)
+
+const divElement = document.querySelector('div')
+divElement.addEventListener("click", (event) => {
+    console.log(event.target)
+    console.log(event.currentTarget)
+    console.log(event.eventPhase)
+    console.log("Div was clicked!")
+},true)
+
+const bodyElement = document.body
+bodyElement.addEventListener("click", (event)=> {
+    console.log(event.target)
+    console.log(event.currentTarget)
+    console.log(event.eventPhase)
+    console.log("Body was clicked!")
+})
+
+//โจทย์ by จารย์
+const submitButton = document.querySelector("button")
+const divElement = document.querySelector("div");
+const bodyElement = document.body;
+
+const displayMessage = (event) => {
+    const target = event.target        
+    const current = event.currentTarget 
+    const phase = event.eventPhase
+
+    console.log(target)
+    console.log(current)
+    console.log(phase)
+}
+submitButton.addEventListener("click",displayMessage, true)
+divElement.addEventListener("click",displayMessage)
+bodyElement.addEventListener("click",displayMessage)
+
+
+
+VER6
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: green;">
+    <div style="background-color: yellow; height: 200px;">
+        <button id="submit">Submit</button>
+    </div>
+    <a href="https://www.sit.kmutt.ac.th/">SIT, KMUTT</a>
+    <script src="main.js"></script>
+</body>
+</html>
+
+
+//1.จง query link เเบบไม่มี prevent ไรเลย คือกด SIT, KMUTT เเล้วไป web เลย
+// const aLink = document.querySelector('a')
+// aLink.addEventListener("click", (e) => {
+//     console.log("Web Visit")
+// })
+
+//1.2ลองทำ prevent
+const aLink = document.querySelector('a')
+aLink.addEventListener("click", (e) => {
+    e.preventDefault()
+    console.log("Web Visit")
+})
+
+
+
+
+VER7
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: green;">
+    <div style="background-color: yellow; height: 200px;">
+        <button id="submit">Submit</button>
+    </div>
+    <a href="https://www.sit.kmutt.ac.th/">SIT, KMUTT</a>
+    <script src="main.js"></script>
+</body>
+</html>
+
+ document.addEventListener('DOMContentLoaded', () => {
+ console.log('DOM is ready!')
+ const heading = document.createElement('h2')
+ heading.textContent = 'This was added when DOM was ready!'
+ document.body.appendChild(heading)
+ console.log('Heading added now.')
+ })
+ window.addEventListener('load', () => {
+ console.log('All resources (images, CSS, scripts) are fully loaded!')
+ console.log('Page is fully loaded')
+ })
+
+
+
+VER8
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: green;">
+    <p id = "info"></p>
+    <script src="main.js"></script>
+</body>
+</html>
+
+ const info = document.getElementById('info')
+ // Window resize event
+ window.addEventListener('resize', () => {
+ info.textContent = `Window resized: ${window.innerWidth} x ${window.innerHeight}`
+ })
+ // Window scroll event
+ window.addEventListener('scroll', () => {
+ info.textContent = `Scrolled to Y: ${window.scrollY}`
+ })
+
+
+
+
+
+VER9
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+      <label for="fname">First name:</label>
+      <input type="text" id="fname" name="fname" value="John" />
+      <label for="lname">Last name:</label>
+      <input type="text" id="lname" name="lname" value="Doe" />
+      <p id="message"></p>
+      <input type="submit" value="Submit" />
+    </form>
+    <script src="./main.js"></script>
+  </body>
+</html>
+
+
+const fName = document.getElementById("fname")
+const lName = document.getElementById("lname")
+const message = document.getElementById("message")
+
+function checkEmpty(e) {
+  console.log(e)
+  if (e.target.value.trim().length === 0) {
+    message.style.color = "red"
+    message.textContent = `your ${e.target.id} is empty`
+  }
+}
+fName.addEventListener("blur", checkEmpty)
+lName.addEventListener("blur", checkEmpty)
+ 
+
+
+
+VER10
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+      <label for="fname">First name:</label>
+      <input type="text" id="fname" name="fname" value="John" />
+      <label for="lname">Last name:</label>
+      <input type="text" id="lname" name="lname" value="Doe" />
+      <p id="message"></p>
+      <p id="info">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio recusandae quod deserunt. Aperiam dolores delectus sunt neque optio porro unde quam. Exercitationem tempore distinctio ipsum saepe! Quisquam illo laudantium expedita!</p>
+      <input type="submit" value="Submit" />
+    </form>
+    <script src="./main.js"></script>
+  </body>
+</html>
+
+ const info = document.getElementById('info')
+ info.addEventListener('mouseout', (event) => {
+ console.log('mouse out')
+ })
+ info.addEventListener('mouseover', (event) => {
+ console.log('mouse over')
+ })
+ window.addEventListener('mousemove', (event) => {
+ info.textContent = `Mouse at X: ${event.clientX}, Y: ${event.clientY}`
+ })
+
+
+
+
+
+
+VER11
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="message" />
+    <script src="./main.js"></script>
+  </body>
+</html>
+
+const inputMessage = document.getElementById('message')
+inputMessage.addEventListener('keyup', (event) => {
+  if (event.key === 'Enter')  console.log(event.target.value)
+})
+//อันนี้จารย์สนใจ key enter
+ 
+
+
+//โจทย์ ทุกครั้งที่พิมพ์ตัวอักษรใดๆทุกตัว มันจะเเสดงออกมาที่ console ทุกตัว
+const inputMessage = document.getElementById('message')
+inputMessage.addEventListener('keyup', (event) => {
+    console.log(event.key)
+})
+
+
+
+
+VER12
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="message" />
+    <p></p>
+    <script src="./main.js"></script>
+  </body>
+</html>
+
+const message = document.querySelector('#message') 
+const display = document.querySelector('p') 
+message.addEventListener('input', function () {
+ display.textContent = message.value
+ })
+
+
+
+//ถ้าใช้ change
+const message = document.querySelector('#message') 
+const display = document.querySelector('p') 
+message.addEventListener('change', function () {
+ display.textContent = message.value
+ })
+
+
+//ให้เห็นภาพ
+const message = document.querySelector('#message') 
+const display = document.querySelector('p') 
+message.addEventListener('input', function () {
+    console.log("input handler function is working...")
+    display.textContent = message.value
+ })
