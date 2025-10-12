@@ -10,7 +10,20 @@ console.log(greet('Jasper', hello))
 
 
 /*ตัวอย่างจากอ. 
-อันนี้มี higher order function 3 ตัว */
+1. เขียนฟังก์ชันชื่อ calculate(nums, compute)
+  ฟังก์ชันนี้จะรับ อาร์เรย์ของตัวเลข (nums) และ ฟังก์ชัน (compute) ที่จะใช้คำนวณ
+  จากนั้นให้คืนค่าผลลัพธ์ที่ได้จากการเรียก compute(nums)
+2. เขียนฟังก์ชันที่ใช้กับ calculate ได้ 4 ฟังก์ชัน ได้แก่
+  sum(elements) → คืนค่าผลรวมของทุกตัวในอาร์เรย์
+  max(elements) → คืนค่าตัวเลขที่มากที่สุดในอาร์เรย์
+  min(elements) → คืนค่าตัวเลขที่น้อยที่สุดในอาร์เรย์
+  sort(elements) → คืนค่าอาร์เรย์ที่เรียงจากน้อยไปมาก
+
+ทดสอบฟังก์ชันทั้งหมดด้วยตัวอย่างต่อไปนี้
+console.log(calculate([1, 3, 5, 7], sum))      // 16
+console.log(calculate([100, 3, 5, 7], max))    // 100
+console.log(calculate([10, 2, 0, 7], min))     // 0
+console.log(calculate([10, 2, 0, 7], sort))    // [0, 2, 7, 10]  */
 function calculate(nums, compute) {//higher order function
     return compute(nums)
 }
@@ -30,6 +43,9 @@ console.log(calculate([1, 3, 5, 7], sum)) //16
 console.log(calculate([100, 3, 5, 7], max)) //100
 console.log(calculate([10, 2, 0, 7], min)) //0
 console.log(calculate([10, 2, 0, 7], sort)) //[ 0, 2, 7, 10 ]
+
+/*คำถาม โค้ดที่เขียนไปนี้มี Higher-order function กี่ตัว อะไรบ้าง
+ANS 3 ตัวคือ calculate, sum(เพราะ reduce), sort(เพราะ sort)*/
 
 /*Function type */
 // function a() {}          // ชั้นที่ 1 (global)
@@ -125,6 +141,8 @@ function makeAdder(x, y) {
 }
 const add5 = makeAdder(5)
 console.log(add5(3)) //8
+
+
 
 function counter() {
   let count = 0

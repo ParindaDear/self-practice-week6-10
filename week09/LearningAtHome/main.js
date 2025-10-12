@@ -31,7 +31,20 @@ liveInput.addEventListener('input', (event) => {
 
 /*ข้อ4 Form Submit :
 เมื่อกดปุ่ม submit ให้แสดงข้อความ "Form submitted!" ใน <p id="formMsg"> โดยไม่ reload หน้า (preventDefault()) */
+const demoForm = document.getElementById('demoForm');
+const formMsg = document.getElementById('formMsg');
+
+demoForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  formMsg.textContent = 'Form submitted!';
+});
 
 
 /*ข้อ5 Event Delegation:
 เมื่อคลิก <li> ใน <ul id="taskList"> ให้ลบรายการนั้นออกจาก list */
+const taskList = document.getElementById('taskList');
+taskList.addEventListener('click', (event) => {
+  if (event.target.tagName === 'LI') {
+    event.target.remove(); 
+  }
+});
