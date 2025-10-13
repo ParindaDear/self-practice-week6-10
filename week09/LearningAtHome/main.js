@@ -48,3 +48,29 @@ taskList.addEventListener('click', (event) => {
     event.target.remove(); 
   }
 });
+
+/*ข้อ6 Keydown Event :
+เมื่อผู้ใช้กดปุ่ม 'Enter' ในช่อง #keyInput ให้แสดง alert และล้างช่อง input */
+const keyInput = document.getElementById('keyInput');
+
+keyInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    alert('You pressed Enter!!');
+    event.target.value = '';
+  }
+});
+
+/*ข้อ7 Change Event :
+เมื่อเลือก option ใหม่ใน #selectMenu ให้แสดงข้อความว่าเลือกอะไรใน <p id="selectResult"> */
+const selectMenu = document.getElementById('selectMenu');
+const selectResult = document.getElementById('selectResult');
+
+selectMenu.addEventListener('change', (event) => {
+  const selectedValue = event.target.value;
+  
+  if (selectedValue) {
+    selectResult.textContent = `Current selection: ${selectedValue}`;
+  } else {
+    selectResult.textContent = 'Current selection: None';
+  }
+});
