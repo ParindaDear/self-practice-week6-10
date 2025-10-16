@@ -1,10 +1,18 @@
 เรื่อง Client-side Storage
 Client-side Storage เป็นการเก็บข้อมูลไว้ฝั่งผู้ใช้(Browser) โดยไม่ต้องส่งไปก็บที่ server
 
-ถ้าเพิ่ม cookie เดิมเข้าไปจะเป็นการ replace value
+- cookie เป็น client-side storage ที่ส่งข้อมูบข้าม client server ผ่าน http protocol ได้
+ซึ่งมันเป็นตัวเดียวที่ทำได้ local, session ทำไม่ได้
+- session storage คือปิด tab เเล้วหายหมด
+- local คือปิด tab เเล้วไม่หาย ดังนั้นไม่ควรมีไรสำคัญมากๆอยู่ในนี้อย่าง secret id / token เพราะอันตราย
 
+Third party cookie คือ web ที่ไม่ใช่ web ที่เราเข้า (มันแฝงอยุ่)
+First party cookie คือ web ที่เราเข้า
 
-
+- ถ้าเพิ่ม cookie เดิมเข้าไปจะเป็นการ replace value
+- สิ่งที่ require จริงๆคือ cookie name, cookie value
+- path มีผลต่อ cookie คือ path อื่นที่ไม่ใช่ sub dir ที่สร้างจะใช้ cookie นี้ไม่ได้
+- เราสร้างเเละจัดการ cookie โดยใช้ document.cookie 
 
 SET1 cookie
 console.log(document.coookie)
@@ -32,18 +40,18 @@ if(sessionStorage.getItem('like')===null)
 else sessionStorage.setItem("like", ++like)
 alert(like)
 
+//เขียนแบบที่ถูกต้อง
+let like = sessionStorage.getItem("like") //เป็นการ ดึงค่าจาก sessionStorage ที่มีชื่อคีย์ว่า "like" มาเก็บไว้ในตัวแปร like
+if (like === null) {
+    like = 0
+}
+like++
+sessionStorage.setItem("like", like) //บันทึกค่าล่าสุด
+alert(like) //แสดงจำนวนครั้งที่ like
 
 SET4
-//session storage
-let like = sessionStorage.getItem("like")
-if(sessionStorage.getItem('like')===null)
-    sessionStorage.setItem("like", like)
-else sessionStorage.setItem("like", ++like)
-alert(sessionStorage.getItem("like"))
-
-SET5
-//localStorage
+//เรื่อง localStorage
 let like = localStorage.getItem("like")
-if(like === null) localStorage.setItem("like", 1)
+if(like === null) localStorage.setItem("like", 1) // ถ้า localStorage ยังไม่มีค่า "like" อยู่ ให้สร้าง "like" และเริ่มนับจาก 1
 else localStorage.setItem("like", ++like)
 alert(localStorage.getItem("like"))
