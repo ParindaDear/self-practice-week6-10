@@ -1,7 +1,7 @@
 // Lesson 3 - Events Starter
 import { addQuote, updateQuote, deleteQuote, getAllQuotes } from "./quote.js";
 
-let quotes = []
+let quotes = getAllQuotes()
 
 // Select DOM elements
 const quoteList = document.getElementById("quote-list");
