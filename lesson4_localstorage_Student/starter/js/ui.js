@@ -114,8 +114,26 @@ function showRandomQuote() {
 // ==============================
 // Write your code here
 // ==============================
-function loadQuotes() {}
-function saveQuotes() {}
+function saveQuotes() {
+  localStorage.setItem('quotes', JSON.stringify(quotes))
+}
+
+function loadQuotes() {
+  const storedQuotes = localStorage.getItem('quotes')
+  if (storedQuotes) {
+    const parsed = JSON.parse(storedQuotes)
+    quotes.length = 0
+    parsed.forEach(q => {
+      quotes.push(q)
+    })
+    if (quotes.length > 0) {
+      const maxId = Math.max(...quotes.map(q => q.id))
+      import('./quote.js').then(module => {
+        module.nextId = maxId + 1
+      })
+    }
+  }
+}
 
 loadQuotes()
 renderQuotes()
